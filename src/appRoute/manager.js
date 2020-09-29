@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route } from 'react-router'
 
-import useMultiThemes from 'root/middlewares/themesProvider'
+import useMultiThemes from 'root/components/themesProvider'
 import authRoutePath from './auth'
 
 

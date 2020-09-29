@@ -1,7 +1,7 @@
 import {
   FORM_REGISTER,
   FORM_LOGIN
-} from './../../actionTypes'
+} from '../../actionTypes'
 // import validatesCommon from './validates.json'
 
 const validateUserName = (value) => {

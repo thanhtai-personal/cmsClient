@@ -13,7 +13,7 @@ import {
   MaterialUITextField as TextField
 } from 'root/components/materialUI'
 
-import { withValidateForm } from 'root/middlewares/validateForm'
+import { withValidateForm } from 'root/components/validateForm'
 import { Link } from 'react-router-dom'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { makeStyles } from '@material-ui/core/styles'
