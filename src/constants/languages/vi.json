@@ -1,0 +1,16 @@
+{
+  "loginContainer": {
+    "login": "Đăng nhập",
+    "userName": "Tên người dùng",
+    "password": "Mật khẩu"
+  },
+  "registerContainer": {
+    "register": "Đăng ký",
+    "userName": "Tên người dùng",
+    "password": "Mật khẩu",
+    "fullName": "Họ và tên"
+  },
+  "headerComponent": {
+    "login": "Đăng nhập"
+  }
+}
