@@ -24,10 +24,12 @@ export const withValidateField = (WrappedField, formInfo = {}) => {
     const onChangeWithValidate = (e, data) => {
       const value = e?.target?.value || ''
       if (!validatedData.firstUpdated && useFirstUpdate) {
-        updateValidateData && typeof updateValidateData == 'function' && updateValidateData(formInfo.form, 'firstUpdated', true)
+        updateValidateData && typeof updateValidateData == 'function' 
+        && updateValidateData(formInfo.form, 'firstUpdated', true)
       }
       const validateFunction = validateFunctions[validatedName] || (() => {})
-      updateValidateData && typeof updateValidateData == 'function' && updateValidateData(formInfo.form, validatedName, validateFunction(value))
+      updateValidateData && typeof updateValidateData == 'function' 
+      && updateValidateData(formInfo.form, validatedName, validateFunction(value))
       onChange && typeof onChange === 'function' && onChange(e, data)
     }
 

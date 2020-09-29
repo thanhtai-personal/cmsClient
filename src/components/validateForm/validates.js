@@ -5,29 +5,29 @@ import {
 // import validatesCommon from './validates.json'
 
 const validateEmail = (value) => {
-  let validateOnj = {
+  let validateObj = {
     isValidated: true,
   }
   if (!value) {
-    validateOnj = {
+    validateObj = {
       isValidated: false,
-      errorMessage: 'empty user name'
+      message: 'empty user name'
     }
   }
-  return validateOnj
+  return validateObj
 }
 
 const validatePassword = (value) => {
-  let validateOnj = {
+  let validateObj = {
     isValidated: true,
   }
   if (!value) {
-    validateOnj = {
+    validateObj = {
       isValidated: false,
-      errorMessage: 'empty password'
+      message: 'empty password'
     }
   }
-  return validateOnj
+  return validateObj
 }
 
 const validates = {

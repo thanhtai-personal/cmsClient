@@ -26,7 +26,6 @@ function AppRoute() {
   return (
     <> { /* your usual react-router v4/v5 routing */ }
         <Switch>
-          <Route exact path="/" render={() => (<div>Match</div>)} />
           {appRoutes.reduce()}
           <Route render={() => (<div>Miss</div>)} />
         </Switch>

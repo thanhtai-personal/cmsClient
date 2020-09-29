@@ -4,6 +4,13 @@ import RegisterComponent from 'root/features/auth/components/register'
 const authRoutes = [
   {
     key: 'login',
+    path: '/',
+    isExact: true,
+    component: LoginComponent,
+    isMultitheme: true
+  },
+  {
+    key: 'login',
     path: '/login',
     isExact: true,
     component: LoginComponent,

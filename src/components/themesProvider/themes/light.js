@@ -40,12 +40,12 @@ const lightTheme = createMuiTheme({
     },
     MuiButton: {
       root: {
-        color: 'white'
+        color: 'gray'
       }
     },
     MuiLink: {
       root: {
-        color: 'white'
+        color: 'green'
       }
     },
     MuiTypography: {
