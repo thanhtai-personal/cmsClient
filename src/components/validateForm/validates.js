@@ -4,7 +4,7 @@ import {
 } from '../../actionTypes'
 // import validatesCommon from './validates.json'
 
-const validateUserName = (value) => {
+const validateEmail = (value) => {
   let validateOnj = {
     isValidated: true,
   }
@@ -33,11 +33,11 @@ const validatePassword = (value) => {
 const validates = {
   auth: {
     [FORM_REGISTER]: {
-      userName: validateUserName,
+      email: validateEmail,
       password: validatePassword
     },
     [FORM_LOGIN]: {
-      userName: validateUserName,
+      email: validateEmail,
       password: validatePassword
     }
   }

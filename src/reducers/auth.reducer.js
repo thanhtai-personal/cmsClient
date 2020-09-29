@@ -62,7 +62,7 @@ const authReducer = (state = initalState, { type, payload }) => {
   switch (type) {
     case UPDATE_VALIDATE_DATA:
       let newStateForValidate = { ...state }
-      if (forms.includes(payload?.for)) {
+      if (forms.includes(payload?.form)) {
         newStateForValidate[payload.form].validatedData[payload.key] = payload.value
       }
       return newStateForValidate
