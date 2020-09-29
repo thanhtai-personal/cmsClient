@@ -61,17 +61,33 @@ const initalState = {
 const authReducer = (state = initalState, { type, payload }) => {
   switch (type) {
     case UPDATE_VALIDATE_DATA:
-      let newStateForValidate = { ...state }
       if (forms.includes(payload?.form)) {
-        newStateForValidate[payload.form].validatedData[payload.key] = payload.value
+        return {
+          ...state,
+          [payload.form]: {
+            ...state[payload.form],
+            validatedData: {
+              ...state[payload.form].validatedData,
+              [payload.key]: payload.value
+            }
+          }
+        }
       }
-      return newStateForValidate
+      return state
     case UPDATEINPUT:
-      let newState = { ...state }
       if (forms.includes(payload?.form)) {
-        newState[payload.form].data[payload.key] = payload.value
+        return {
+          ...state,
+          [payload.form]: {
+            ...state[payload.form],
+            data: {
+              ...state[payload.form].data,
+              [payload.key]: payload.value
+            }
+          }
+        }
       }
-      return newState
+      return state
     case LOGIN:
       return {
         ...state,
