@@ -53,14 +53,14 @@ export const withValidateField = (WrappedField, formInfo = {}) => {
     />
   }
 
-  const useState = (state) => ({
+  const mapState = (state) => ({
     formData: Util.get(state, formDataPath),
     validatedData: Util.get(state, validatedDataPath),
   })
-  const useAction = {
+  const mapAction = {
     updateValidateData
   }
-  return connect(useState, useAction)(WithValidateFieldComponent)
+  return connect(mapState, mapAction)(WithValidateFieldComponent)
 }
 
 export const withValidateForm = (WrappedForm, formInfo = {}) => {
@@ -78,12 +78,12 @@ export const withValidateForm = (WrappedForm, formInfo = {}) => {
     />
   }
 
-  const useState = (state) => ({
+  const mapState = (state) => ({
     formData: Util.get(state, formDataPath),
     validatedData: Util.get(state, validatedDataPath),
   })
-  const useAction = {
+  const mapAction = {
 
   }
-  return connect(useState, useAction)(WithValidateFormComponent)
+  return connect(mapState, mapAction)(WithValidateFormComponent)
 }
