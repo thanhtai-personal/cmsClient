@@ -8,7 +8,7 @@ export default {
   // `baseURL` will be prepended to `url` unless `url` is absolute.
   // It can be convenient to set `baseURL` for an instance of axios to pass relative URLs
   // to methods of that instance.
-  baseURL: 'http://localhost:3000/api/',
+  baseURL: 'http://localhost:3000/',
 
   // `transformRequest` allows changes to the request data before it is sent to the server
   // This is only applicable for request methods 'PUT', 'POST', 'PATCH' and 'DELETE'
@@ -24,7 +24,13 @@ export default {
   // it is passed to then/catch
   transformResponse: [function (data) {
     // Do whatever you want to transform the data
-    return JSON.parse(data)
+    let result = {}
+    try {
+      result = JSON.parse(data)
+    } catch (error) {
+      result = data
+    }
+    return result
   }],
 
   // `headers` are custom headers to be sent
@@ -32,7 +38,6 @@ export default {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true
   },
 
   // `params` are the URL parameters to be sent with the request
@@ -64,7 +69,7 @@ export default {
 
   // `withCredentials` indicates whether or not cross-site Access-Control requests
   // should be made using credentials
-  withCredentials: true, // default
+  withCredentials: false, // default
 
   // `adapter` allows custom handling of requests which makes testing easier.
   // Return a promise and supply a valid response (see lib/adapters/README.md).

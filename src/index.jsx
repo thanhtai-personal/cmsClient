@@ -1,31 +1,32 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter } from 'react-router-dom'
+import React, { StrictMode } from 'react'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { createGlobalStyle } from 'styled-components'
-import AppRoute from './components/AppRoutes'
-import reset from './constants/css/reset'
-import * as serviceWorker from './serviceWorker'
+import { ConnectedRouter } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
+
+import AppRoute from './appRoute'
 import configureStore from './store'
-import rootSaga from './sagas'
-// ... other imports
+import * as serviceWorker from './serviceWorker'
 
-const GlobalStyle = createGlobalStyle`${reset}`
-const store = configureStore()
-store.runSaga(rootSaga)
+const history = createBrowserHistory()
+const store = configureStore({}, history)
+const NODE_MOUNT = document.getElementById('root')
 
-ReactDOM.render(
-  // <React.StrictMode>
-    <BrowserRouter>
+const renderApp = () =>
+  render(
+    <StrictMode>
       <Provider store={store}>
-        <AppRoute />
+        <ConnectedRouter history={history}>
+          <AppRoute />
+        </ConnectedRouter>
       </Provider>
-      <GlobalStyle />
-    </BrowserRouter>,
-  // </React.StrictMode>,
-  document.getElementById('root')
-)
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister()
+    </StrictMode>,
+    NODE_MOUNT
+  )
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./appRoute', renderApp)
+}
+
+renderApp()
+serviceWorker.unregister();
