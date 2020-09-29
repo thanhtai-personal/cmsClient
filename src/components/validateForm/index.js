@@ -47,7 +47,7 @@ export const withValidateField = (WrappedField, formInfo = {}) => {
 
     return <WrappedField
       {...nestedProps}
-      error={validatedData[validatedName].isValidated && validatedData.firstUpdated}
+      error={!validatedData[validatedName].isValidated && validatedData.firstUpdated}
       // errorText={validatedData[validatedName].message || ''}
       onBlur={onReleaseField}
       onChange={onChangeWithValidate}
