@@ -28,7 +28,7 @@ import {
   FEATURE_AUTH
 } from 'root/actionTypes'
 
-const WithTalidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_REGISTER })
+const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_REGISTER })
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -140,7 +140,7 @@ const SignUpComponent = (props, state) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <WithTalidateTextField
+              <WithValidateTextField
                 useFirstUpdate
                 validatedName='email'
                 key='userName'
@@ -156,7 +156,7 @@ const SignUpComponent = (props, state) => {
               />
             </Grid>
             <Grid item xs={12}>
-              <WithTalidateTextField
+              <WithValidateTextField
                 useFirstUpdate
                 validatedName='password'
                 key='password'

@@ -23,7 +23,7 @@ import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
 
-const WithTalidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
+const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -83,7 +83,7 @@ const LoginComponent = (props) => {
           {text.login}
         </Typography>
         <form className={classes.form} noValidate={false} autoComplete="off">
-          <WithTalidateTextField
+          <WithValidateTextField
             useFirstUpdate
             validatedName='email'
             variant='outlined'
@@ -98,7 +98,7 @@ const LoginComponent = (props) => {
             onChange={onChangeEmail}
             defaultValue={email}
           />
-          <WithTalidateTextField
+          <WithValidateTextField
             useFirstUpdate
             validatedName='password'
             variant='outlined'
