@@ -21,3 +21,9 @@ export const makeSagasActionType = (actionType) => {
 //form
 export const FORM_REGISTER = 'FORM_REGISTER'
 export const FORM_LOGIN = 'FORM_LOGIN'
+
+//feature
+export const FEATURE_AUTH = 'auth'
+
+//validate
+export const UPDATE_VALIDATE_DATA = 'UPDATE_VALIDATE_DATA'

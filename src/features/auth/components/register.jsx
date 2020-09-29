@@ -13,7 +13,7 @@ import {
   MaterialUITextField as TextField
 } from 'root/components/materialUI'
 
-import { withValidateForm } from 'root/components/validateForm'
+import { withValidateForm, withValidateField } from 'root/components/validateForm'
 import { Link } from 'react-router-dom'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { makeStyles } from '@material-ui/core/styles'
@@ -24,8 +24,11 @@ import {
 } from './../actions'
 
 import {
-  FORM_REGISTER
+  FORM_REGISTER,
+  FEATURE_AUTH
 } from 'root/actionTypes'
+
+const WithTalidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_REGISTER })
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,7 +65,6 @@ const SignUpComponent = (props, state) => {
       readyHaveAccount: 'Already have an account? Sign in'
     }
     , register
-    , withValidateField
     , isFormValidated
   } = props
 
@@ -70,7 +72,7 @@ const SignUpComponent = (props, state) => {
     firstName,
     middleName,
     lastName,
-    userName,
+    email,
     password
   } = inputData
 
@@ -138,33 +140,37 @@ const SignUpComponent = (props, state) => {
               />
             </Grid>
             <Grid item xs={12}>
-              {withValidateField(TextField, {
-                key: 'userName',
-                variant: 'outlined',
-                required: true,
-                fullWidth: true,
-                id: 'email',
-                label: text.userName,
-                name: 'email',
-                autoComplete: 'email',
-                defaultValue: userName,
-                onChange: (e) => updateRegisterData('email', e?.currentTarget?.value),
-              })}
+              <WithTalidateTextField
+                useFirstUpdate
+                validatedName='email'
+                key='userName'
+                variant='outlined'
+                required={true}
+                fullWidth={true}
+                id='email'
+                label={text.email}
+                name='email'
+                autoComplete='email'
+                defaultValue={email}
+                onChange={(e) => updateRegisterData('email', e?.currentTarget?.value)}
+              />
             </Grid>
             <Grid item xs={12}>
-              {withValidateField(TextField, {
-                key: 'password',
-                variant: 'outlined',
-                required: true,
-                fullWidth: true,
-                id: 'password',
-                type: 'password',
-                label: text.password,
-                name: 'password',
-                autoComplete: 'password',
-                defaultValue: password,
-                onChange: (e) => updateRegisterData('password', e?.currentTarget?.value),
-              })}
+              <WithTalidateTextField
+                useFirstUpdate
+                validatedName='password'
+                key='password'
+                variant='outlined'
+                required
+                fullWidth
+                id='password'
+                type='password'
+                label={text.password}
+                name='password'
+                autoComplete='password'
+                defaultValue={password}
+                onChange={(e) => updateRegisterData('password', e?.currentTarget?.value)}
+              />
             </Grid>
           </Grid>
           <Button
@@ -192,7 +198,7 @@ const SignUpComponent = (props, state) => {
 
 
 const mapState = (state) => ({
-  inputData: state.auth[FORM_REGISTER].inputData,
+  inputData: state.auth[FORM_REGISTER].data,
 })
 
 const mapDispatch = {
@@ -200,4 +206,6 @@ const mapDispatch = {
   register
 }
 
-export default withValidateForm(`auth.${FORM_REGISTER}.inputData`, connect(mapState, mapDispatch)(SignUpComponent))
+export default withValidateForm(connect(mapState, mapDispatch)(SignUpComponent), {
+  feature: FEATURE_AUTH, form: FORM_REGISTER, useFirstUpdate: true
+})

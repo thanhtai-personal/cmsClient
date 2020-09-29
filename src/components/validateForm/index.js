@@ -1,94 +1,89 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
+import { updateValidateData } from 'root/actions/validates.actions'
 import Util from 'root/utils'
-import { MaterialUIFieldNames } from 'root/components/materialUI'
-import validates from './validates'
+import { isObject } from 'util'
+import validatesConfig from './validates'
 
-// This function takes a component...
-export const withValidateForm = (formName, WrappedComponent) => {
-  // ...and returns another component...
-  const ValidateFormHOC = (props) => {
-    const { data = {} } = props
-    const [isFormValidated, setIsFormValidated] = React.useState(true)
-    const [firstUpdated, setFirstUpdated] = React.useState(false)
-    const [fieldsValidate, setFieldValidate] = React.useState({})
-    let validateFunctions = {}
+export const withValidateField = (WrappedField, formInfo = {}) => {
+  const formDataPath = `${formInfo.feature}.${formInfo.form}.data`
+  const validateFunctions = validatesConfig[formInfo.feature][formInfo.form]
+  const validatedDataPath = `${formInfo.feature}.${formInfo.form}.validatedData`
 
-    const getValidateFieldData = (key) => {
-      return Util.get(validates, `${formName}.${key}`)
+  const WithValidateFieldComponent = (props) => {
+    const { formData
+      , useFirstUpdate
+      , onChange
+      , validatedName
+      , validatedData
+      , ...nestedProps
+    } = props
+
+    const onChangeWithValidate = (e, data) => {
+      const value = e?.target?.value || ''
+      if (!validatedData.firstUpdated && useFirstUpdate) {
+        updateValidateData && typeof updateValidateData == 'function' && updateValidateData(formInfo.form, 'firstUpdated', true)
+      }
+      const validateFunction = validateFunctions[validatedName] || (() => {})
+      updateValidateData && typeof updateValidateData == 'function' && updateValidateData(formInfo.form, validatedName, validateFunction(value))
+      onChange && typeof onChange === 'function' && onChange(e, data)
     }
-    const checkFieldValidate = (key, value) => {
-      const validateFunction = validateFunctions[key] || (() => {})
-      let _fieldsValidate = {...fieldsValidate}
-      _fieldsValidate[key] = validateFunction(value)
-      setFieldValidate(_fieldsValidate) 
-    }
-    const checkFormValidate = () => {
-      let _isFormValidated = true
-      Object.keys(fieldsValidate).forEach((key) => {
-        if (!fieldsValidate[key].isValidated) {
-          _isFormValidated = false
+
+    const onReleaseField = (e) => {
+      const { validatedData } = props
+      let validated = true
+      Object.keys(validatedData).forEach((key) => {
+        if (isObject(validatedData[key]) 
+        && Object.keys(validatedData[key]).includes('isValidated')
+        && !validatedData[key].isValidated
+        ) {
+          validated = false
         }
       })
-      if (_isFormValidated !== isFormValidated) {
-        setIsFormValidated(_isFormValidated)
-      }
-    }
-    const checkDefaultValidatedField = (key) => {
-      let valueCheck = data[key] || ''
-      if (!valueCheck) return false
-      return checkFieldValidate(key, valueCheck)
-    }
-    const validateOnChange = (key, value) => {
-      if (!firstUpdated) {
-        setFirstUpdated(true)
-      }
-      checkFieldValidate(key, value)
-      checkFormValidate()
-    }
-    const withValidateField = (FieldComponent, props) => {
-      const { key, onChange, ...nestedProps } = props   
-      validateFunctions[key] = getValidateFieldData(key) || {}
-      switch (FieldComponent.displayName) {
-        case MaterialUIFieldNames.MaterialUITextField:
-          return <FieldComponent
-            {...nestedProps}
-            error={!fieldsValidate[key]?.isValidated && firstUpdated}
-            onChange={(e) => {
-              const value = e?.target?.value || ''
-              validateOnChange(key, value)
-              onChange && typeof onChange === 'function' && onChange(e)
-            }}
-          />
-        default: 
-          return ''
-      }
+      updateValidateData && typeof updateValidateData == 'function' && updateValidateData(formInfo.form, 'isFormValidated', validated)
     }
 
-    React.useEffect(() => {
-      let _fieldsValidate = { ...fieldsValidate }
-      Object.keys(validateFunctions).forEach((key) => {
-        if (!validateFunctions[key]) {
-          _fieldsValidate[key] = checkDefaultValidatedField(key)
-        }
-        if (_fieldsValidate[key]?.isValidated !== fieldsValidate[key]?.isValidated) {
-          setFieldValidate(_fieldsValidate)
-        }
-      })
-    }, [])
-
-    return <WrappedComponent
-      withValidateField={withValidateField}
-      isFormValidated={isFormValidated && firstUpdated}
-      {...props}
+    return <WrappedField
+      {...nestedProps}
+      error={validatedData[validatedName].isValidated && validatedData.firstUpdated}
+      errorText={validatedData[validatedName].message}
+      onBlur={onReleaseField}
+      onChange={onChangeWithValidate}
     />
   }
 
   const useState = (state) => ({
-    data: Util.get(state, formName)
+    formData: Util.get(state, formDataPath),
+    validatedData: Util.get(state, validatedDataPath),
   })
-
-  return connect(useState, null)(ValidateFormHOC)
+  const useAction = {
+    updateValidateData
+  }
+  return connect(useState, useAction)(WithValidateFieldComponent)
 }
 
+export const withValidateForm = (WrappedForm, formInfo = {}) => {
+  const formDataPath = `${formInfo.feature}.${formInfo.form}.data`
+  const validatedDataPath = `${formInfo.feature}.${formInfo.form}.validatedData`
+
+  const WithValidateFormComponent = (props) => {
+    const { validatedData: { isFormValidated, firstUpdated }
+      , ...nestedProps
+    } = props
+
+    return <WrappedForm
+      isFormValidated={isFormValidated && (formInfo.useFirstUpdate ? firstUpdated : true)}
+      {...nestedProps}
+    />
+  }
+
+  const useState = (state) => ({
+    formData: Util.get(state, formDataPath),
+    validatedData: Util.get(state, validatedDataPath),
+  })
+  const useAction = {
+
+  }
+  return connect(useState, useAction)(WithValidateFormComponent)
+}

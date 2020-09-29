@@ -1,5 +1,8 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
+import {
+  FEATURE_AUTH
+} from 'root/actionTypes'
 
 // import undoable from '../middleware/undoableReducer'
 import authReducer from './auth.reducer'
@@ -7,7 +10,7 @@ import authReducer from './auth.reducer'
 function createReducerManager(history) {
   // Create an object which maps keys to reducers
   const reducers = {
-    auth: authReducer,
+    [FEATURE_AUTH]: authReducer,
     router: connectRouter(history)
   }
   // Create the initial combinedReducer

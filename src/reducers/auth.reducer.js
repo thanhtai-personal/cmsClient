@@ -6,28 +6,53 @@ import {
   UPDATEINPUT,
   makeSagasActionType,
   FORM_LOGIN,
-  FORM_REGISTER
+  FORM_REGISTER,
+  UPDATE_VALIDATE_DATA
 } from 'root/actionTypes'
 
 const forms = [
-  FORM_LOGIN, FORM_REGISTER
+  FORM_LOGIN, FORM_REGISTER,
 ]
 
 const initalState = {
   [FORM_LOGIN]: {
     loading: false,
-    inputData: {
-
+    data: {
+      email: '',
+      password: ''
+    },
+    validatedData: {
+      email: {
+        isValidated: false,
+        message: ''
+      },
+      password: {
+        isValidated: false,
+        message: ''
+      },
+      firstUpdated: false
     }
   },
   [FORM_REGISTER]: {
     loading: false,
-    inputData: {
+    data: {
       firstName: '',
       middleName: '',
       lastName: '',
-      userName: '',
+      email: '',
       password: '',
+    },
+    validatedData: {
+      email: {
+        isValidated: false,
+        message: ''
+      },
+      password: {
+        isValidated: false,
+        message: ''
+      },
+      firstUpdated: false,
+      isFormValidated: false
     }
   },
   auth: {}
@@ -35,10 +60,16 @@ const initalState = {
 
 const authReducer = (state = initalState, { type, payload }) => {
   switch (type) {
+    case UPDATE_VALIDATE_DATA:
+      let newStateForValidate = { ...state }
+      if (forms.includes(payload?.for)) {
+        newStateForValidate[payload.form].validatedData[payload.key] = payload.value
+      }
+      return newStateForValidate
     case UPDATEINPUT:
       let newState = { ...state }
       if (forms.includes(payload?.form)) {
-        newState[payload.form].inputData[payload.key] = payload.value
+        newState[payload.form].data[payload.key] = payload.value
       }
       return newState
     case LOGIN:

@@ -33,16 +33,12 @@ const validatePassword = (value) => {
 const validates = {
   auth: {
     [FORM_REGISTER]: {
-      inputData: {
-        userName: validateUserName,
-        password: validatePassword
-      }
+      userName: validateUserName,
+      password: validatePassword
     },
     [FORM_LOGIN]: {
-      inputData: {
-        userName: validateUserName,
-        password: validatePassword
-      }
+      userName: validateUserName,
+      password: validatePassword
     }
   }
 }

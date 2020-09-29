@@ -11,15 +11,19 @@ import {
   Link
 } from '@material-ui/core'
 import {
-  FORM_LOGIN
+  FORM_LOGIN,
+  FEATURE_AUTH
 } from 'root/actionTypes'
 import {
   updateInputData,
   login
 } from './../actions'
+import { withValidateForm, withValidateField } from 'root/components/validateForm'
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
+
+const WithTalidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -51,7 +55,7 @@ const LoginComponent = (props) => {
     forgot: 'Forgot password?',
     dontHaveAccount: 'Don\'t have an account? Sign Up'
   }
-  , login, updateInputData, inputData } = props
+  , login, updateInputData, inputData, isFormValidated } = props
   const { email, password } = inputData
 
   const submitLogin = (event) => {
@@ -79,7 +83,9 @@ const LoginComponent = (props) => {
           {text.login}
         </Typography>
         <form className={classes.form} noValidate={false} autoComplete="off">
-          <TextField
+          <WithTalidateTextField
+            useFirstUpdate
+            validatedName='email'
             variant='outlined'
             margin='normal'
             required
@@ -92,7 +98,9 @@ const LoginComponent = (props) => {
             onChange={onChangeEmail}
             defaultValue={email}
           />
-          <TextField
+          <WithTalidateTextField
+            useFirstUpdate
+            validatedName='password'
             variant='outlined'
             margin='normal'
             required
@@ -111,6 +119,7 @@ const LoginComponent = (props) => {
             variant='contained'
             color='primary'
             className={classes.submit}
+            disabled={!isFormValidated}
           >
             {text.login}
           </Button>
@@ -133,7 +142,7 @@ const LoginComponent = (props) => {
 }
 
 const mapState = (state) => ({
-  inputData: state.auth[FORM_LOGIN].inputData
+  inputData: state.auth[FORM_LOGIN].data
 })
 
 const mapDispatch = {
@@ -141,4 +150,8 @@ const mapDispatch = {
   login
 }
 
-export default connect(mapState, mapDispatch)(LoginComponent)
+export default withValidateForm(connect(mapState, mapDispatch)(LoginComponent), {
+  feature: FEATURE_AUTH,
+  form: FORM_LOGIN,
+  useFirstUpdate: true
+})
