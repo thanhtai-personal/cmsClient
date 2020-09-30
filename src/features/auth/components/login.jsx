@@ -57,6 +57,7 @@ const LoginComponent = (props) => {
     forgot: 'Forgot password?',
     dontHaveAccount: 'Don\'t have an account? Sign Up'
   }
+  , updateGoogleLoginData
   , login, updateInputData, inputData, isFormValidated } = props
   const { email, password } = inputData
 
@@ -76,7 +77,14 @@ const LoginComponent = (props) => {
 
   const onGGLoginSuccess = (googleUser) => {
     var profile = googleUser.getBasicProfile()
-    updateGoogleLoginData(profile)
+    updateGoogleLoginData({
+      fullName: profile.getName(),
+      email: profile.getEmail(),
+      image: profile.getImageUrl(),
+      googleId: profile.getId(),
+      firstName: profile.getFamilyName(),
+      lastName: profile.getGivenName()
+    })
   }
 
   const onGGLoginFailure = (googleUser) => {

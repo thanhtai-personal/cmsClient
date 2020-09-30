@@ -7,7 +7,8 @@ import {
   makeSagasActionType,
   FORM_LOGIN,
   FORM_REGISTER,
-  UPDATE_VALIDATE_DATA
+  UPDATE_VALIDATE_DATA,
+  GOOGLE_LOGIN
 } from 'root/actionTypes'
 
 const forms = [
@@ -141,6 +142,30 @@ const authReducer = (state = initalState, { type, payload }) => {
         auth: {
           ...state.auth,
           ...payload?.data
+        }
+      }
+    case GOOGLE_LOGIN:
+      return {
+        ...state,
+        [FORM_LOGIN]: {
+          ...state[FORM_LOGIN],
+          loading: true
+        }
+      }
+    case makeSagasActionType(GOOGLE_LOGIN).SUCCESS:
+      return {
+        ...state,
+        [FORM_LOGIN]: {
+          ...state[FORM_LOGIN],
+          loading: false
+        }
+      }
+    case makeSagasActionType(GOOGLE_LOGIN).FAILED:
+      return {
+        ...state,
+        [FORM_LOGIN]: {
+          ...state[FORM_LOGIN],
+          loading: false
         }
       }
     default:
