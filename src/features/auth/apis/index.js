@@ -1,7 +1,8 @@
 export const authApiNames = {
   login: 'login',
   register: 'register',
-  getAuthData: 'getAuthData'
+  getAuthData: 'getAuthData',
+  googleLogin: 'googleLogin'
 }
 
 const authApi = [
@@ -17,6 +18,10 @@ const authApi = [
     method: 'get',
     name: authApiNames.getAuthData,
     path: '/auth/get',
+  },{
+    method: 'post',
+    name: authApiNames.googleLogin,
+    path: '/auth/google',
   }
 ]
 

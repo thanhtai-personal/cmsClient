@@ -21,6 +21,7 @@ export const makeSagasActionType = (actionType) => {
 //form
 export const FORM_REGISTER = 'FORM_REGISTER'
 export const FORM_LOGIN = 'FORM_LOGIN'
+export const GOOGLE_LOGIN = 'GOOGLE_LOGIN'
 
 //feature
 export const FEATURE_AUTH = 'auth'

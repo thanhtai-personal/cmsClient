@@ -11,6 +11,7 @@ import {
   REGISTER,
   LOGIN,
   GETAUTH,
+  GOOGLE_LOGIN,
   makeSagasActionType
 } from 'root/actionTypes'
 import { authApiNames } from './../apis'
@@ -37,6 +38,15 @@ function* register (action = {}) {
   }
 }
 
+function* googleLogin (action = {}) {
+  try {
+    const result = yield APIManager.call(authApiNames.googleLogin, action.payload).then(response => response)
+    yield put({ type: makeSagasActionType(GOOGLE_LOGIN).SUCCESS, payload: result?.data })
+  } catch (error) {
+    yield put({ type: makeSagasActionType(GOOGLE_LOGIN).FAILED, payload: error });
+  }
+}
+
 function* getAuth(action = {}) {
   // const authResult = yield APIManager.call(authApiNames.getAuthData, action.payload).then(response => response)
 }
@@ -45,6 +55,7 @@ export default function* authWatcher() {
   yield all([
     takeLatest(REGISTER, register),
     takeLatest(LOGIN, login),
-    takeLatest(GETAUTH, getAuth)
+    takeLatest(GETAUTH, getAuth),
+    takeLatest(GOOGLE_LOGIN, googleLogin)
   ])
 }

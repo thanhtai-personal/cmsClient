@@ -16,12 +16,14 @@ import {
 } from 'root/actionTypes'
 import {
   updateInputData,
-  login
+  login,
+  updateGoogleLoginData
 } from './../actions'
 import { withValidateForm, withValidateField } from 'root/components/validateForm'
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
+import GoogleLogin from 'react-google-login'
 
 const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
 
@@ -72,6 +74,14 @@ const LoginComponent = (props) => {
     typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'password', e?.currentTarget?.value)
   }
 
+  const onGGLoginSuccess = (googleUser) => {
+    var profile = googleUser.getBasicProfile()
+    updateGoogleLoginData(profile)
+  }
+
+  const onGGLoginFailure = (googleUser) => {
+  }
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -82,7 +92,7 @@ const LoginComponent = (props) => {
         <Typography component='h1' variant='h5'>
           {text.login}
         </Typography>
-        <form className={classes.form} noValidate={false} autoComplete="off">
+        <form className={classes.form} noValidate={false} autoComplete='off'>
           <WithValidateTextField
             useFirstUpdate
             validatedName='email'
@@ -135,6 +145,19 @@ const LoginComponent = (props) => {
               </Link>
             </Grid>
           </Grid>
+          <Grid container>
+            <Grid item xs>
+            </Grid>
+            <Grid item>
+              <GoogleLogin
+                clientId='404281480421-lbrm3qknrffqpndu06u4925047tt4ee3.apps.googleusercontent.com'
+                buttonText={text.login}
+                onSuccess={onGGLoginSuccess}
+                onFailure={onGGLoginFailure}
+                cookiePolicy={'single_host_origin'}
+              />
+            </Grid>
+          </Grid>
         </form>
       </div>
     </Container>
@@ -147,7 +170,8 @@ const mapState = (state) => ({
 
 const mapDispatch = {
   updateInputData,
-  login
+  login,
+  updateGoogleLoginData
 }
 
 export default withValidateForm(connect(mapState, mapDispatch)(LoginComponent), {
