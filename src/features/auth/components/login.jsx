@@ -24,6 +24,7 @@ import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 // import { Link } from 'react-router-dom'
 import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login'
 
 const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
 
@@ -90,6 +91,16 @@ const LoginComponent = (props) => {
   const onGGLoginFailure = (googleUser) => {
   }
 
+  const responseFacebook = (responseData) => {
+    updateGoogleLoginData({
+      fullName: responseData.name,
+      email: responseData.email,
+      image: responseData.picture.url,
+      googleId: responseData.id,
+      accessToken: responseData.accessToken
+    })
+  }
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -152,9 +163,16 @@ const LoginComponent = (props) => {
                 {text.dontHaveAccount}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> 
           <Grid container>
             <Grid item xs>
+              <FacebookLogin
+                appId='792720271478099'
+                autoLoad={true}
+                fields='name,email,picture'
+                // onClick={componentClicked}
+                cssClass='kep-login-facebook'
+                callback={responseFacebook} />
             </Grid>
             <Grid item>
               <GoogleLogin
