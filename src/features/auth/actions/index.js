@@ -2,7 +2,8 @@ import {
   LOGIN,
   REGISTER,
   UPDATEINPUT,
-  GOOGLE_LOGIN
+  GOOGLE_LOGIN,
+  GETAUTH
 } from 'root/actionTypes'
 
 export const updateInputData = (form, key, value) => {
@@ -30,5 +31,13 @@ export const updateGoogleLoginData = (data) => {
   return {
     type: GOOGLE_LOGIN,
     payload: data,
+  }
+}
+
+
+export const getAuth = (token) => {
+  return {
+    type: GETAUTH,
+    payload: token,
   }
 }

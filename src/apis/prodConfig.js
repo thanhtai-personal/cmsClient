@@ -30,6 +30,11 @@ export default {
     } catch (error) {
       result = data
     }
+    if (result.code === 200) {
+      return result.data
+    } else if (result.code) {
+      return { message: 'api return error' }
+    }
     return result
   }],
  

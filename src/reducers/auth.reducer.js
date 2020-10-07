@@ -131,6 +131,7 @@ const authReducer = (state = initalState, { type, payload }) => {
         }
       }
     case GETAUTH:
+      return state
     case makeSagasActionType(GETAUTH).FAILED:
       return {
         ...state,

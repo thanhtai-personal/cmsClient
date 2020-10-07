@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {
-  LOGIN
-} from 'root/actionTypes'
+import { getAuth } from 'root/features/auth/actions'
 
 
 export const requireAuth = (ComposedComponent) => {
@@ -33,10 +31,8 @@ export const requireAuth = (ComposedComponent) => {
     return {};
   }
 
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      getAuth: () => dispatch(LOGIN)
-    }
+  const mapDispatchToProps = {
+    getAuth
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(RequireAuthComponent)
