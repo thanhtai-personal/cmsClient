@@ -22,7 +22,7 @@ const APIManager = apiManager()
 function* login(action = {}) {
   try {
     const loginResult = yield APIManager.call(authApiNames.login, action.payload).then(response => response)
-    console.log('fadsf', loginResult?.code, loginResult?.code === 200)
+    window.localStorage.setItem('tttgalaxy--token', loginResult?.token)
     yield put({ type: makeSagasActionType(LOGIN).SUCCESS, payload: loginResult?.data })
   } catch (error) {
     yield put({ type: makeSagasActionType(LOGIN).FAILED, payload: error });
@@ -41,6 +41,7 @@ function* register (action = {}) {
 function* googleLogin (action = {}) {
   try {
     const result = yield APIManager.call(authApiNames.googleLogin, action.payload).then(response => response)
+    window.localStorage.setItem('tttgalaxy--token', result?.token)
     yield put({ type: makeSagasActionType(GOOGLE_LOGIN).SUCCESS, payload: result?.data })
   } catch (error) {
     yield put({ type: makeSagasActionType(GOOGLE_LOGIN).FAILED, payload: error });

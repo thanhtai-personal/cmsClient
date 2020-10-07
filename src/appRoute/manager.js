@@ -2,6 +2,7 @@ import React from 'react'
 import { Route } from 'react-router'
 
 import useMultiThemes from 'root/components/themesProvider'
+import { requireAuth } from 'root/middlewares/auth.middlewares'
 import authRoutePath from './auth'
 
 
@@ -15,6 +16,9 @@ const combineRoute = (appRoutes) => {
   return routesList.map((route = {}) => {
     //update option later
     let resultComponent = route.component
+    if (route.private) {
+      resultComponent = requireAuth(resultComponent)
+    }
     if (route.isMultitheme) {
       resultComponent = useMultiThemes(resultComponent)
     }

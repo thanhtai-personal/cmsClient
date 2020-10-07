@@ -1,20 +1,24 @@
+import React from 'react'
+import { connect } from 'react-redux'
 import {
   LOGIN
 } from 'root/actionTypes'
+
 
 export const requireAuth = (ComposedComponent) => {
   class RequireAuthComponent extends React.PureComponent {
     // Push to login route if not authenticated on mount
 
     getToken () {
-      return window.sessionStorage.getItem('jwtToken');
+      return window.localStorage.getItem('tttgalaxy--token');
     }
 
     componentWillMount () {
-      if (!this.getToken()) {
+      let token = this.getToken();
+      if (!token) {
         this.props.history.push('/login')
       } else {
-        this.props.login()
+        this.props.getAuth(token)
       }
     }
 
@@ -31,7 +35,7 @@ export const requireAuth = (ComposedComponent) => {
 
   const mapDispatchToProps = (dispatch) => {
     return {
-      login: () => dispatch(LOGIN)
+      getAuth: () => dispatch(LOGIN)
     }
   }
 
