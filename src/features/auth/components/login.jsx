@@ -53,12 +53,13 @@ const useStyles = makeStyles((theme) => ({
 const LoginComponent = (props) => {
   const classes = useStyles()
   const { text = {
-    googleLogin: 'Login with Google',
+    googleLogin: 'Sign in with Google',
     login: 'Login',
     email: 'Email Address',
     password: 'Password',
     forgot: 'Forgot password?',
-    dontHaveAccount: 'Don\'t have an account? Sign Up'
+    dontHaveAccount: 'Don\'t have an account? Sign Up',
+    facebookLogin: 'Sign in with Facebook'
   }
     , updateGoogleLoginData
     , login, updateInputData, inputData, isFormValidated } = props
@@ -188,6 +189,7 @@ const LoginComponent = (props) => {
                 fields='name,email,picture'
                 // onClick={componentClicked}
                 cssClass='loginBtn loginBtn--facebook'
+                textButton={text.facebookLogin}
                 callback={responseFacebook} />
             </Grid>
           </Grid>
