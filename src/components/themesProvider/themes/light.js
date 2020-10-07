@@ -51,6 +51,11 @@ const lightTheme = createMuiTheme({
         color: 'rgba(252, 186, 3, 0.54)',
         backgroundColor: 'steelblue'
       }
+    },
+    MuiToolbar:{
+      root: {
+        backgroundColor: 'black'
+      }
     }
   }
 })
