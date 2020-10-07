@@ -1,11 +1,11 @@
-import LoginContainer from 'root/features/auth/containers/login'
+import AdminContainer from 'root/features/admin/containers/admin'
 
 const authRoutes = [
   {
     key: 'admin',
     path: '/admin',
     isExact: true,
-    component: LoginContainer,
+    component: AdminContainer,
     isMultitheme: true,
     private: true
   },
@@ -13,7 +13,7 @@ const authRoutes = [
     key: 'dashboard',
     path: '/dashboard',
     isExact: true,
-    component: LoginContainer,
+    component: AdminContainer,
     private: true
   }
 ]

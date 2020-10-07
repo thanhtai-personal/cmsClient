@@ -1,27 +1,7 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createMuiTheme } from '@material-ui/core'
 
 const lightTheme = createMuiTheme({
   overrides: {
-    MuiCard: {
-      root: {
-        backgroundColor: 'white',
-        display: 'flex',
-        float: 'left',
-      }
-    },
-    MuiCardMedia: {
-      root: {
-        display: 'flex',
-        float: 'right',
-      }
-    },
-    MuiCardContent: {
-      root: {
-        backgroundColor: 'white',
-        flex: '1 0 auto',
-        fontSize: '12px',
-      }
-    },
     MuiContainer: {
       root: {
         backgroundColor: '#E2EEE2',
@@ -32,10 +12,6 @@ const lightTheme = createMuiTheme({
       '@global': {
         body: {
           backgroundColor: '#CCD8CC'
-        },
-        h5: {
-          fontcolor: 'white',
-          color: 'black'
         }
       }
     },
@@ -44,38 +20,39 @@ const lightTheme = createMuiTheme({
         color: 'gray'
       }
     },
+    MuiButtonBase: {
+      root: {
+        color: 'black'
+      }
+    },
     MuiLink: {
       root: {
         color: 'green'
       }
     },
-    MuiTypography: {
+    MuiPaper: {
       root: {
-      }
-    },
-    MuiExpansionPanel: {
-      root: { 
         backgroundColor: 'steelblue',
-        fontSize: '12px',
-        color: 'black',
-        border: 'solid 1px yellow'
-      }
-    },
-    MuiDrawer: {
-      root: {
+        color: 'white'
       }
     },
     MuiListItemText: {
       primary: {
-        fontSize: '0.6em',
+        fontSize: '0.8em',
         color: 'white'
       },
       secondary: {
         fontSize: '1.2em',
-        color: 'yellow'
+        color: 'black'
+      }
+    },
+    MuiListItemIcon: {
+      root: {
+        color: 'rgba(252, 186, 3, 0.54)',
+        backgroundColor: 'steelblue'
       }
     }
   }
-});
+})
 
 export default lightTheme 
