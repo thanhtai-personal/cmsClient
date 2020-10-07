@@ -6,7 +6,8 @@ import {
   CssBaseline,
   Grid,
   Container,
-  Typography
+  Typography,
+  Link
 } from '@material-ui/core'
 
 import {
@@ -14,7 +15,7 @@ import {
 } from 'root/components/materialUI'
 
 import { withValidateForm, withValidateField } from 'root/components/validateForm'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { makeStyles } from '@material-ui/core/styles'
 
@@ -59,7 +60,7 @@ const SignUpComponent = (props, state) => {
       firstName: 'First Name',
       middleName: 'Middle Name',
       lastName: 'Last Name',
-      userName: 'Email',
+      email: 'Email',
       password: 'Password',
       register: 'signup',
       readyHaveAccount: 'Already have an account? Sign in'
@@ -143,7 +144,7 @@ const SignUpComponent = (props, state) => {
               <WithValidateTextField
                 useFirstUpdate
                 validatedName='email'
-                key='userName'
+                key='email'
                 variant='outlined'
                 required={true}
                 fullWidth={true}
@@ -185,7 +186,7 @@ const SignUpComponent = (props, state) => {
           </Button>
           <Grid container justify='flex-end'>
             <Grid item>
-              <Link to='/login'>
+              <Link href='/login'>
                 {text.readyHaveAccount}
               </Link>
             </Grid>

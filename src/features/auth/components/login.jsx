@@ -28,6 +28,7 @@ import FacebookLogin from 'react-facebook-login'
 
 const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
 
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -52,14 +53,15 @@ const useStyles = makeStyles((theme) => ({
 const LoginComponent = (props) => {
   const classes = useStyles()
   const { text = {
+    googleLogin: 'Login with Google',
     login: 'Login',
     email: 'Email Address',
     password: 'Password',
     forgot: 'Forgot password?',
     dontHaveAccount: 'Don\'t have an account? Sign Up'
   }
-  , updateGoogleLoginData
-  , login, updateInputData, inputData, isFormValidated } = props
+    , updateGoogleLoginData
+    , login, updateInputData, inputData, isFormValidated } = props
   const { email, password } = inputData
 
   const submitLogin = (event) => {
@@ -96,7 +98,7 @@ const LoginComponent = (props) => {
       fullName: responseData.name,
       email: responseData.email,
       image: responseData.picture.url,
-      googleId: responseData.id,
+      facebookId: responseData.id,
       accessToken: responseData.accessToken
     })
   }
@@ -163,25 +165,30 @@ const LoginComponent = (props) => {
                 {text.dontHaveAccount}
               </Link>
             </Grid>
-          </Grid> 
+          </Grid>
           <Grid container>
-            <Grid item xs>
+            <Grid item xs></Grid>
+            <Grid item>
+              <GoogleLogin
+                clientId='404281480421-lbrm3qknrffqpndu06u4925047tt4ee3.apps.googleusercontent.com'
+                // buttonText={text.googleLogin}
+                onSuccess={onGGLoginSuccess}
+                onFailure={onGGLoginFailure}
+                cookiePolicy={'single_host_origin'}
+                className='loginBtn loginBtn--google'
+              />
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs></Grid>
+            <Grid item>
               <FacebookLogin
                 appId='792720271478099'
                 autoLoad={true}
                 fields='name,email,picture'
                 // onClick={componentClicked}
-                cssClass='kep-login-facebook'
+                cssClass='loginBtn loginBtn--facebook'
                 callback={responseFacebook} />
-            </Grid>
-            <Grid item>
-              <GoogleLogin
-                clientId='404281480421-lbrm3qknrffqpndu06u4925047tt4ee3.apps.googleusercontent.com'
-                buttonText={text.login}
-                onSuccess={onGGLoginSuccess}
-                onFailure={onGGLoginFailure}
-                cookiePolicy={'single_host_origin'}
-              />
             </Grid>
           </Grid>
         </form>

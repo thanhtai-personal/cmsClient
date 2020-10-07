@@ -24,13 +24,14 @@ const lightTheme = createMuiTheme({
     },
     MuiContainer: {
       root: {
-        backgroundColor: 'white',
+        backgroundColor: '#E2EEE2',
+        paddingBottom: '24px',
       }
     },
     MuiCssBaseline: {
       '@global': {
         body: {
-          backgroundColor: 'white'
+          backgroundColor: '#CCD8CC'
         },
         h5: {
           fontcolor: 'white',

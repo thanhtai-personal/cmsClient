@@ -7,6 +7,7 @@ import { createBrowserHistory } from 'history'
 import AppRoute from './appRoute'
 import configureStore from './store'
 import * as serviceWorker from './serviceWorker'
+import './App.css'
 
 const history = createBrowserHistory()
 const store = configureStore({}, history)
