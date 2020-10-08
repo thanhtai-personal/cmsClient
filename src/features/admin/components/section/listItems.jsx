@@ -1,75 +1,70 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import {
+  List,
   ListItem,
   ListItemIcon,
   ListItemText,
-  ListSubheader
+  ListSubheader,
+  Divider
 } from '@material-ui/core'
 
 import {
-  Dashboard as DashboardIcon,
-  ShoppingCart as ShoppingCartIcon,
-  People as PeopleIcon,
-  BarChart as BarChartIcon,
-  Layers as LayersIcon,
-  Assessment as AssignmentIcon
-} from '@material-ui/icons'
+  updateSelectMainMenu,
+  updateSelectSecondaryMenu
+} from './../../actions/menu'
 
-export const mainListItems = (
-  <div>
-    <ListItem button>
-      <ListItemIcon>
-        <DashboardIcon />
-      </ListItemIcon>
-      <ListItemText primary="Dashboard" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <BarChartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Reports" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Integrations" />
-    </ListItem>
-  </div>
-)
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-)
+
+
+const MainListItems = (props) => {
+
+  const { adminMenu = {}
+    , updateSelectMainMenu
+    , updateSelectSecondaryMenu
+  } = props
+
+  const mainListItems = Object.keys(adminMenu.mainListItems || {}).map((key) => {
+    return adminMenu.mainListItems[key]
+  })
+  const secondaryListItems = Object.keys(adminMenu.secondaryListItems || {}).map((key) => {
+    return adminMenu.secondaryListItems[key]
+  })
+
+  const renderItems = (listItems, selectFuntion) => {
+    return listItems.map((item, index) => {
+
+      return (
+        <ListItem key={`mainListItems-${item.key || index}`} button selected={!!item.selected}
+          onClick={() => { 
+            selectFuntion(item.key) 
+          }}
+        >
+          <ListItemIcon>
+            <item.icon />
+          </ListItemIcon>
+          <ListItemText primary={item.name} />
+        </ListItem>
+      )
+    })
+  }
+  return (
+    <>
+      <List>{renderItems(mainListItems, updateSelectMainMenu)}</List>
+      <Divider />
+      <ListSubheader inset>Saved reports</ListSubheader>
+      <List>{renderItems(secondaryListItems, updateSelectSecondaryMenu)}</List>
+    </>
+  )
+}
+
+const mapState = (state) => ({
+  adminMenu: state.adminMenu
+})
+
+const mapDispatch = {
+  updateSelectMainMenu,
+  updateSelectSecondaryMenu
+}
+
+export default connect(mapState, mapDispatch)(MainListItems)

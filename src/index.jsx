@@ -2,15 +2,14 @@ import React, { StrictMode } from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
-import { createBrowserHistory } from 'history'
 
 import AppRoute from './appRoute'
-import configureStore from './store'
+import StoreSingleton from './storeSingleton'
 import * as serviceWorker from './serviceWorker'
 import './App.css'
 
-const history = createBrowserHistory()
-const store = configureStore({}, history)
+const store = StoreSingleton.getInstance().store
+const history = StoreSingleton.getInstance().history
 const NODE_MOUNT = document.getElementById('root')
 
 const renderApp = () =>

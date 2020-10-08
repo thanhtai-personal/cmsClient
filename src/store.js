@@ -30,10 +30,17 @@ export default function configureStore(initialState, history) {
   // This function adds the async reducer, and creates a new combined reducer
   store.reducerManager = reducerManager
   store.sagasManager = sagasManager
-
-  if (process.env.NODE_ENV !== 'production' && module.hot) {
-    module.hot.accept('./reducers', () => store.replaceReducer(reducerManager.reduce))
+  store.updateReducer = () => {
+    store.replaceReducer(store.reducerManager.reduce)
   }
+  store.updateSagas = () => {
+    sagaMiddleware.run(sagasManager.reduce)
+  }
+
+  // if (process.env.NODE_ENV !== 'production' && module.hot) {
+  //   module.hot.accept('./reducers', () => store.replaceReducer(reducerManager.reduce))
+  //   module.hot.accept('./sagas', () => store.replaceReducer(sagasManager.reduce))
+  // }
 
   return store
 }

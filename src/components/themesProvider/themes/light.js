@@ -36,20 +36,27 @@ const lightTheme = createMuiTheme({
         color: 'white'
       }
     },
+    MuiListItem: {
+      root: {
+        '&$selected': {
+          backgroundColor: 'green',
+        }
+      }
+    },
     MuiListItemText: {
       primary: {
-        fontSize: '0.8em',
-        color: 'white'
+        fontSize: '0.9em',
+        color: 'white',
       },
       secondary: {
-        fontSize: '1.2em',
+        fontSize: '0.7em',
         color: 'black'
       }
     },
     MuiListItemIcon: {
       root: {
         color: 'rgba(252, 186, 3, 0.54)',
-        backgroundColor: 'steelblue'
+        backgroundColor: 'transparent'
       }
     },
     MuiToolbar:{
