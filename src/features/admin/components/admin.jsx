@@ -1,38 +1,16 @@
+
 import React from 'react'
-import clsx from 'clsx'
 import { makeStyles } from '@material-ui/core/styles'
 import { 
   CssBaseline,
-  Box,
-  Typography,
   Container,
-  Grid,
-  Paper,
-  Link
 } from '@material-ui/core'
-import Chart from './section/chart'
-import Deposits from './section/deposits'
-import Orders from './section/orders'
 import AppBar from './appBar'
 import Menu from './menu'
-
-/**SETUP REDUCER */
+import AdminContent from './adminContent'
 import setupFeature from '../setup'
+
 setupFeature()
-
-
-function Copyright() {
-  return (
-    <Typography variant='body2' color='textSecondary' align='center'>
-      {'Copyright © '}
-      <Link color='inherit' href='https://material-ui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -68,7 +46,6 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false)
   }
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight)
 
   return (
     <div className={classes.root}>
@@ -78,29 +55,7 @@ export default function Dashboard() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth='lg' className={classes.container}>
-          <Grid container spacing={3}>
-            {/* Chart */}
-            <Grid item xs={12} md={8} lg={9}>
-              <Paper className={fixedHeightPaper}>
-                <Chart />
-              </Paper>
-            </Grid>
-            {/* Recent Deposits */}
-            <Grid item xs={12} md={4} lg={3}>
-              <Paper className={fixedHeightPaper}>
-                <Deposits />
-              </Paper>
-            </Grid>
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                <Orders />
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+          <AdminContent />
         </Container>
       </main>
     </div>

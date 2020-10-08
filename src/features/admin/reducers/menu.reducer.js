@@ -13,55 +13,57 @@ import {
   UPDATE_SECONDARY_MENU_SELECTED
 } from 'root/actionTypes'
 
+import { adminApiNames } from './../apis'
+
 
 const initalState = {
   mainListItems: {
-    dashboard: {
-      key: 'dashboard',
+    [adminApiNames.dashboard]: {
+      key: adminApiNames.dashboard,
       name: 'Dashboard',
       icon: DashboardIcon,
       selected: false
     },
-    products: {
-      key: 'products',
+    [adminApiNames.products]: {
+      key: adminApiNames.products,
       name: 'Products',
       icon: ShoppingCartIcon,
       selected: false
     },
-    users: {
-      key: 'users',
+    [adminApiNames.users]: {
+      key: adminApiNames.users,
       name: 'Users',
       icon: PeopleIcon,
       selected: false
     },
-    reports: {
-      key: 'reports',
+    [adminApiNames.reports]: {
+      key: adminApiNames.reports,
       name: 'Reports',
       icon: BarChartIcon,
       selected: false
     },
-    integrations: {
-      key: 'integrations',
+    [adminApiNames.integrations]: {
+      key: adminApiNames.integrations,
       name: 'Integrations',
       icon: LayersIcon,
       selected: false
     }
   },
   secondaryListItems: {
-    currentMonth: {
-      key: 'currentMonth',
+    [adminApiNames.currentMonth]: {
+      key: adminApiNames.currentMonth,
       name: 'Current month',
       icon: AssignmentIcon,
       selected: false
     },
-    lastQuarter: {
-      key: 'lastQuarter',
+    [adminApiNames.lastQuarter]: {
+      key: adminApiNames.lastQuarter,
       name: 'Last quarter',
       icon: AssignmentIcon,
       selected: false
     },
-    yearEndSale: {
-      key: 'yearEndSale',
+    [adminApiNames.yearEndSale]: {
+      key: adminApiNames.yearEndSale,
       name: 'Year-end sale',
       icon: AssignmentIcon,
       selected: false

@@ -11,14 +11,13 @@ import {
   UPDATE_MAIN_MENU_SELECTED,
   makeSagasActionType
 } from 'root/actionTypes'
-import { adminMenuApiNames } from '../apis/menu'
-import apiManager from 'root/apis'
-const APIManager = apiManager()
+import { adminApiNames } from '../apis'
+import apiManagerSingleton from 'root/apis/apiManagerSingleton'
+const APIManager = apiManagerSingleton.getInstance()
 
 function* getDetailDataByMenuKey(action = {}) {
   try {
-    const apiName = `get${action.payload.key}`
-    const result = yield APIManager.call(adminMenuApiNames[apiName], action.payload).then(response => response)
+    const result = yield APIManager.call(adminApiNames[action.payload.key], action.payload).then(response => response)
     yield put({ type: makeSagasActionType(UPDATE_MAIN_MENU_SELECTED).SUCCESS, payload: result?.data })
   } catch (error) {
     yield put({ type: makeSagasActionType(UPDATE_MAIN_MENU_SELECTED).FAILED, payload: error });
