@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
+  },
+  toolbarTitle: {
+    paddingRight: '40px'
   }
 }))
 
@@ -68,6 +71,7 @@ const MenuComponent = (props) => {
       open={open}
     >
       <div className={classes.toolbarIcon}>
+        <div className={classes.toolbarTitle}>TINTIN SHOP</div>
         <IconButton onClick={handleDrawerClose}>
           <ChevronLeftIcon />
         </IconButton>

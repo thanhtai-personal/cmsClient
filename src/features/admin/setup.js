@@ -7,11 +7,16 @@ import adminApi from './apis'
 
 const store = StoreSingleton.getInstance().store
 
+export const reducerNames = {
+  adminMenu: 'adminMenu',
+  adminContent: 'adminContent'
+}
+
 const setupAdmin = () => {
   const state = store.getState()
   if (!state?.adminMenu) {
-    store.reducerManager.add('adminMenu', adminMenuReducer)
-    store.reducerManager.add('adminContent', adminContentReducer)
+    store.reducerManager.add(reducerNames.adminMenu, adminMenuReducer)
+    store.reducerManager.add(reducerNames.adminContent, adminContentReducer)
     store.sagasManager.add('adminSagas', adminSagas)
     apiManagerSingleton.getInstance().add('adminApis', adminApi)
 

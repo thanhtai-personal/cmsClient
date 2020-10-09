@@ -28,7 +28,7 @@ const initalState = {
       key: adminApiNames.products,
       name: 'Products',
       icon: ShoppingCartIcon,
-      selected: false
+      selected: true
     },
     [adminApiNames.users]: {
       key: adminApiNames.users,

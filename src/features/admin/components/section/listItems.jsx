@@ -13,6 +13,7 @@ import {
   updateSelectMainMenu,
   updateSelectSecondaryMenu
 } from './../../actions/menu'
+import { reducerNames } from './../../setup'
 
 
 
@@ -33,7 +34,6 @@ const MainListItems = (props) => {
 
   const renderItems = (listItems, selectFuntion) => {
     return listItems.map((item, index) => {
-
       return (
         <ListItem key={`mainListItems-${item.key || index}`} button selected={!!item.selected}
           onClick={() => { 
@@ -59,7 +59,7 @@ const MainListItems = (props) => {
 }
 
 const mapState = (state) => ({
-  adminMenu: state.adminMenu
+  adminMenu: state[reducerNames.adminMenu]
 })
 
 const mapDispatch = {
