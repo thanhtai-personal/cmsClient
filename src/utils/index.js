@@ -1,3 +1,11 @@
+import {
+  componentToModal,
+  componentToDialog
+} from './renderUtils'
+
+export const ComponentToModal = componentToModal
+export const ComponentToDialog = componentToDialog
+
 const castPath = (path, object) => {
   let result = []
   if (path && object && typeof object === 'object') {

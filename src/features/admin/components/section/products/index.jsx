@@ -13,9 +13,15 @@ import Title from '../title'
 import { adminApiNames } from './../../../apis'
 import { reducerNames } from './../../../setup'
 import tableConfig, { valueType } from './tableConfig'
+import CreateProduct from './../../createProduct'
+import {
+  ComponentToDialog
+} from 'root/utils'
 import { 
   updateProductTableConfig
 } from './../../../actions/content'
+
+const CreateProductDialog = ComponentToDialog(CreateProduct)
 
 function preventDefault (event) {
   event.preventDefault()
@@ -97,6 +103,13 @@ const Products = (props) => {
   return (
     <React.Fragment>
       <Title>{text.product || 'Products'}</Title>
+      <CreateProductDialog
+        text={{
+          cancel: 'Cancel',
+          confirm: 'Create',
+          title: 'Create Product'
+        }}
+      />
       <Table size='small'>
         {renderHeader()}
         {renderBody()}

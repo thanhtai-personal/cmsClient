@@ -1,7 +1,6 @@
-import React from 'react'
+//import React from 'react'
 
 import CommonForm from './commonForm'
 
-export const WithStoreForm = () => {
-  
-}
+
+export default { CommonForm }
