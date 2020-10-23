@@ -1,6 +1,9 @@
 import {
   FORM_REGISTER,
-  FORM_LOGIN
+  FORM_LOGIN,
+  FEATURE_ADMIN,
+  FORM_ADD_PRODUCT,
+  FEATURE_AUTH
 } from '../../actionTypes'
 // import validatesCommon from './validates.json'
 
@@ -30,8 +33,23 @@ const validatePassword = (value) => {
   return validateObj
 }
 
+const validateText = (key) => {
+  return (value) => {
+    let validateObj = {
+      isValidated: true,
+    }
+    if (!value) {
+      validateObj = {
+        isValidated: false,
+        message: `empty ${key}`
+      }
+    }
+    return validateObj
+  }
+}
+
 const validates = {
-  auth: {
+  [FEATURE_AUTH]: {
     [FORM_REGISTER]: {
       email: validateEmail,
       password: validatePassword
@@ -39,6 +57,11 @@ const validates = {
     [FORM_LOGIN]: {
       email: validateEmail,
       password: validatePassword
+    }
+  },
+  [FEATURE_ADMIN]: {
+    [FORM_ADD_PRODUCT]: {
+      title: validateText('title')
     }
   }
 }

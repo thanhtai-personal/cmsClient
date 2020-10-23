@@ -6,7 +6,8 @@ import {
   TableBody,
   TableRow,
   TableHead,
-  TableCell
+  TableCell,
+  Grid
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import Title from '../title'
@@ -17,7 +18,7 @@ import CreateProduct from './../../createProduct'
 import {
   ComponentToDialog
 } from 'root/utils'
-import { 
+import {
   updateProductTableConfig
 } from './../../../actions/content'
 
@@ -48,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Products = (props) => {
   const classes = useStyles()
-  const { 
+  const {
     productsData: {
       listData = [],
       tableConfig: { columns = [] }
@@ -56,7 +57,7 @@ const Products = (props) => {
     text = {},
     updateTableConfig
   } = props
-  
+
   useEffect(() => {
     updateTableConfig && typeof updateTableConfig === 'function' && updateTableConfig(tableConfig)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -103,13 +104,24 @@ const Products = (props) => {
   return (
     <React.Fragment>
       <Title>{text.product || 'Products'}</Title>
-      <CreateProductDialog
-        text={{
-          cancel: 'Cancel',
-          confirm: 'Create',
-          title: 'Create Product'
-        }}
-      />
+      <Grid container>
+        <Grid item xs={11}></Grid>
+        <Grid item xs={1}>
+          <CreateProductDialog
+            text={{
+              cancel: 'Finish',
+              confirm: 'Create',
+              title: 'Create Product',
+              open: '+'
+            }}
+            dialogOptions={{
+              fullScreen: true,
+              //fullWidth: true
+            }}
+          />
+        </Grid>
+      </Grid>
+
       <Table size='small'>
         {renderHeader()}
         {renderBody()}

@@ -22,9 +22,11 @@ export const makeSagasActionType = (actionType) => {
 export const FORM_REGISTER = 'FORM_REGISTER'
 export const FORM_LOGIN = 'FORM_LOGIN'
 export const GOOGLE_LOGIN = 'GOOGLE_LOGIN'
+export const FORM_ADD_PRODUCT = 'FORM_ADD_PRODUCT'
 
 //feature
 export const FEATURE_AUTH = 'auth'
+export const FEATURE_ADMIN = 'admin'
 
 //validate
 export const UPDATE_VALIDATE_DATA = 'UPDATE_VALIDATE_DATA'

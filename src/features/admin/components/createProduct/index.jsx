@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import {
   Avatar,
@@ -8,11 +8,11 @@ import {
   Grid,
   Typography,
   Container,
-  Link
+  Switch
 } from '@material-ui/core'
 import {
-  FORM_LOGIN,
-  FEATURE_AUTH
+  FORM_ADD_PRODUCT,
+  FEATURE_ADMIN
 } from 'root/actionTypes'
 import {
 } from './../../actions/createProduct'
@@ -20,10 +20,14 @@ import { withValidateForm, withValidateField } from 'root/components/validateFor
 import { LockOutlined as LockOutlinedIcon } from '@material-ui/icons'
 import { makeStyles } from '@material-ui/core/styles'
 
-const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_AUTH, form: FORM_LOGIN })
+const WithValidateTextField = withValidateField(TextField, { feature: FEATURE_ADMIN, form: FORM_ADD_PRODUCT })
 
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    height: '90vh',
+    overflowY: 'auto'
+  },
   paper: {
     display: 'flex',
     flexDirection: 'column',
@@ -40,124 +44,125 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  viewModeText: {
+    color: 'black'
+  }
 }))
 
 
 const CreateProduct = (props) => {
   const classes = useStyles()
   const { text = {
-    googleLogin: 'Sign in with Google',
-    login: 'Login',
-    email: 'Email Address',
-    password: 'Password',
-    forgot: 'Forgot password?',
-    dontHaveAccount: 'Don\'t have an account? Sign Up',
-    facebookLogin: 'Sign in with Facebook'
+    productCreation: 'Add Product',
+    title: 'Title',
+    create: 'Add',
+    summary: 'Summary',
+    viewMode: 'Review:'
   }
-    , updateGoogleLoginData
-    , login, updateInputData, inputData, isFormValidated } = props
-  const { email, password } = inputData
+    , updateInputData, inputData, isFormValidated
+  } = props
+  const { title, summary } = inputData
+
+  //state
+  const [ viewFullSummaryText, setViewFullSummaryText ] = useState(false)
 
   const submitLogin = (event) => {
     event.preventDefault()
-    console.log('email, password', email, password)
-    typeof login === 'function' && login({ email, password })
   }
 
-  const onChangeEmail = (e) => {
-    typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'email', e?.currentTarget?.value)
-  }
-
-  const onChangePassword = (e) => {
-    typeof updateInputData === 'function' && updateInputData(FORM_LOGIN, 'password', e?.currentTarget?.value)
-  }
-
-  const onGGLoginSuccess = (googleUser) => {
-    var profile = googleUser.getBasicProfile()
-    updateGoogleLoginData({
-      fullName: profile.getName(),
-      email: profile.getEmail(),
-      image: profile.getImageUrl(),
-      googleId: profile.getId(),
-      firstName: profile.getFamilyName(),
-      lastName: profile.getGivenName()
-    })
-  }
-
-  const onGGLoginFailure = (googleUser) => {
-  }
-
-  const responseFacebook = (responseData) => {
-    updateGoogleLoginData({
-      fullName: responseData.name,
-      email: responseData.email,
-      image: responseData.picture.url,
-      facebookId: responseData.id,
-      accessToken: responseData.accessToken
-    })
+  const onChangeInput = (key) => {
+    return (e) => {
+      typeof updateInputData === 'function' && updateInputData(FORM_ADD_PRODUCT, key, e?.currentTarget?.value)
+    }
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
+    <Container component='main' maxWidth={false} className={classes.container}>
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
         <Typography component='h1' variant='h5'>
-          {text.login}
+          {text.productCreation}
         </Typography>
         <form className={classes.form} noValidate={false} autoComplete='off'>
-          <WithValidateTextField
-            useFirstUpdate
-            validatedName='email'
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            id='email'
-            label={text.email}
-            name='email'
-            autoFocus
-            autoComplete={'true'}
-            onChange={onChangeEmail}
-            defaultValue={email}
-          />
-          <WithValidateTextField
-            useFirstUpdate
-            validatedName='password'
-            variant='outlined'
-            margin='normal'
-            required
-            fullWidth
-            name='password'
-            label={text.password}
-            type='password'
-            id='password'
-            onChange={onChangePassword}
-            autoComplete={'true'}
-            defaultValue={password}
-          />
-          <Button
-            onClick={submitLogin}
-            fullWidth
-            variant='contained'
-            color='primary'
-            className={classes.submit}
-            disabled={!isFormValidated}
-          >
-            {text.login}
-          </Button>
           <Grid container>
-            <Grid item xs>
-              <Link href='/forgetPassword'>
-                {text.forgot}
-              </Link>
+            <Grid item xs={6}>
+              <Grid container>
+                <Grid item xs={6}>
+                  <WithValidateTextField
+                    useFirstUpdate
+                    validatedName='title'
+                    variant='outlined'
+                    margin='normal'
+                    required
+                    fullWidth
+                    id='title'
+                    label={text.title}
+                    name='title'
+                    autoFocus
+                    autoComplete={'true'}
+                    onChange={onChangeInput('title')}
+                    defaultValue={title}
+                  />
+                </Grid>
+                <Grid item xs={6}>
+
+                </Grid>
+              </Grid>
+              <Grid container>
+                <Grid item xs={10}>
+                  <TextField 
+                     disabled={!!viewFullSummaryText}
+                     variant='outlined'
+                     margin='normal'
+                     required
+                     fullWidth
+                     multiline
+                     rows={5}
+                     rowsMax={viewFullSummaryText ? 1000 : 5}
+                     id='summary'
+                     label={text.summary}
+                     name='summary'
+                     autoFocus
+                     autoComplete={'true'}
+                     onChange={onChangeInput('summary')}
+                     defaultValue={summary}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Grid component='label' container alignItems='center' spacing={1}>
+                    <Grid item className={classes.viewModeText}>{text.viewMode}</Grid>
+                    <Grid item>
+                      <Switch
+                        checked={viewFullSummaryText}
+                        onChange={(e) => {
+                          setViewFullSummaryText(e?.target?.checked)
+                        }}
+                        color='primary'
+                      />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
             </Grid>
-            <Grid item>
-              <Link href='/register'>
-                {text.dontHaveAccount}
-              </Link>
+            <Grid item xs={6}>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={11}></Grid>
+            <Grid item xs={1}>
+              <Button
+                onClick={submitLogin}
+                fullWidth
+                variant='contained'
+                color='primary'
+                className={classes.submit}
+                disabled={!isFormValidated}
+              >
+                {text.create}
+              </Button>
             </Grid>
           </Grid>
         </form>
@@ -167,14 +172,14 @@ const CreateProduct = (props) => {
 }
 
 const mapState = (state) => ({
-  inputData: state.auth[FORM_LOGIN].data
+  inputData: state[FEATURE_ADMIN][FORM_ADD_PRODUCT].data
 })
 
 const mapDispatch = {
 }
 
 export default withValidateForm(connect(mapState, mapDispatch)(CreateProduct), {
-  feature: FEATURE_AUTH,
-  form: FORM_LOGIN,
+  feature: FEATURE_ADMIN,
+  form: FORM_ADD_PRODUCT,
   useFirstUpdate: true
 })

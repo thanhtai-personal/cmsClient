@@ -28,7 +28,7 @@ export const componentToDialog = (ComposedComponent) => {
   const DialogComponent = (props) => {
     const { onOpen, onClose, text = {}, onConfirm
       , className, customActions, customButton
-      , hasTitle, hasConfirmButton
+      , hasTitle, hasConfirmButton, dialogOptions = {}
       , ...nestedProps
     } = props
     const [open, setOpen] = React.useState(false)
@@ -64,6 +64,7 @@ export const componentToDialog = (ComposedComponent) => {
           aria-labelledby='alert-dialog-title'
           aria-describedby='alert-dialog-description'
           className={className}
+          {...dialogOptions}
         >
           {hasTitle && <DialogTitle id='alert-dialog-title'>{text?.title || 'Unknow Title'}</DialogTitle>}
           <DialogContent>

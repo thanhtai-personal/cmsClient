@@ -18,6 +18,9 @@ const lightTheme = createMuiTheme({
     MuiButton: {
       root: {
         color: 'gray'
+      },
+      textSecondary: {
+        color: 'white'
       }
     },
     MuiButtonBase: {
@@ -75,6 +78,11 @@ const lightTheme = createMuiTheme({
     MuiDialogActions: {
       root: {
         color: 'white'
+      }
+    },
+    MuiGrid: {
+      item: {
+        paddingLeft: '10px'
       }
     }
   }
